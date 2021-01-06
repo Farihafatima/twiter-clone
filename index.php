@@ -1,12 +1,13 @@
 <?php
-$conn = mysqli_connect('localhost','root','',twitter);
+$conn = mysqli_connect('localhost','root','','twitter');
   if (isset($_POST['btn'])) {
   	$message = null;
 
   	if(isset($_POST['message']) && !empty($_POST['message'])) {
-  		else {
-  			$message_error = 'this field is required';
+  		$message = $_POST['message'];
   		}
+      else {
+        $message_error = 'this field is required';
   	}
   	$insert_sql = "INSERT INTO tweet(message) VALUES('$message')";
   	mysqli_query($conn,$insert_sql);
@@ -28,15 +29,13 @@ $conn = mysqli_connect('localhost','root','',twitter);
  		   <br><br> <h2 class="text-primary">Welcome to twitter clone</h2><br>
  		   <div>
  		   	<label class="text-primary"><h3>Text</h3></label><br>
- 		   	<textarea name="message" rows="5" cols="30" placeholder="Comment text
- 		   	<?php if(isset($message_error)) echo 'invalid'; ?>">">
- 		   		<?php if(isset($message_error)): ?>
- 		   	</textarea>
+ 		   	<textarea name="message" rows="5" cols="30" placeholder="Comment text" class="form-control <?php if(isset($message_error)) echo 'is-invalid'; ?>"></textarea>
  		   	<br><br>
- 		   	<span class="helper-text" data-error="<?= $message_error ?>"></span>
+        <?php if (isset($message_error)): ?>
+ 		     <div class="invalid-feedback" ><?= $message_error ?></div>
           	<?php endif; ?>
  		   </div>
- 		    <button type="button" name="btn" class="btn btn-outline-primary">Tweets</button>
+ 		    <button type="submit" name="btn" class="btn btn-outline-primary">Tweets</button>
  		</center>
  	</div>
  </form>
